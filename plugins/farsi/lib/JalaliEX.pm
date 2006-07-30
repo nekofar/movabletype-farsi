@@ -1,4 +1,4 @@
-# Copyright (C) 2005 -2006 Aziz Ashofte <Ashofteh@gmail.com >
+﻿# Copyright (C) 2005 -2006 Aziz Ashofte <Ashofteh@gmail.com >
 # Heavily based on Hamid Hashemi's <hamid@morva.net> JalaliDate package  
 # with some minor changes and additions in order to make it more adjusted for the new 
 # functionalities introduced in JalaliEX
@@ -22,7 +22,7 @@ BEGIN {
 
   $VERSION     = 1.0;
   @ISA         = qw(Exporter);
-  @EXPORT      = qw(&farsi_number &english_number &gregorian_to_jalali &g2jstrftime &jalali_to_gregorian &j2g_ts);
+  @EXPORT      = qw(&farsi_number &english_number &gregorian_to_jalali &g2jstrftime &jalali_to_gregorian &j2g_ts &g2j_ts);
   %EXPORT_TAGS = ( );    
 }
 
@@ -162,6 +162,13 @@ sub j2g_ts($) # just Like strftime = ( @_[0] = pattern, @_[1] = timestamp )
   return $g_ts;
 }
 
+sub g2j_ts($) # just Like strftime = ( @_[0] = pattern, @_[1] = timestamp )
+{
+  my $ts = $_[0];
+  my $j_ts = g2jstrftime('%z', $ts);
+  return $j_ts;
+}
+
 sub jalali_to_gregorian($$$) # ( @_[0] = Jalali_Year , @_[1] = Jalali_Month , @_[2] = Jalali_Day )
 {
   my $i;
@@ -257,16 +264,16 @@ sub farsi_number($) # ( @_[0] = String contains english numbers to covert to far
 sub english_number($) # ( @_[0] = String contains farsi numbers to covert to english  numbers )
 {
   my %table;
-  $table{"\xDB\xB0"}="\x30"; # Persian 0
-  $table{"\xDB\xB1"}="\x31"; # Persian 1
-  $table{"\xDB\xB2"}="\x32"; # Persian 2
-  $table{"\xDB\xB3"}="\x33"; # Persian 3
-  $table{"\xDB\xB4"}="\x34"; # Persian 4
-  $table{"\xDB\xB5"}="\x35"; # Persian 5
-  $table{"\xDB\xB6"}="\x36"; # Persian 6
-  $table{"\xDB\xB7"}="\x37"; # Persian 7
-  $table{"\xDB\xB8"}="\x38"; # Persian 8
-  $table{"\xDB\xB9"}="\x39"; # Persian 9
+  $table{"۰"}="0"; # Persian 0
+  $table{"۱"}="1"; # Persian 1
+  $table{"۲"}="2"; # Persian 2
+  $table{"۳"}="3"; # Persian 3
+  $table{"۴"}="4"; # Persian 4
+  $table{"۵"}="5"; # Persian 5
+  $table{"۶"}="6"; # Persian 6
+  $table{"۷"}="7"; # Persian 7
+  $table{"۸"}="8"; # Persian 8
+  $table{"۹"}="9"; # Persian 9
   my $strout = '';
   my $char = 0;
   foreach (split //,$_[0])
