@@ -1,21 +1,20 @@
 ﻿package MT::L10N::fa;     # فارسی   Persian  Farsi
+## Translators:
+#    Aziz Ashofte
+#    ashofteh AT gmail DOT com
+#    Milad Nekofar
+#    nekofar AT gmail DOT com
+
 use strict;
 use MT::L10N;
 use vars qw( @ISA %Lexicon );
 @ISA = qw( MT::L10N::en_us);
-
-## Translators:
-## Aziz Ashofte
-## ashofteh AT gmail DOT com
-## Milad Nekofar
-## nekofar AT gmail DOT com
 
 sub encoding { "UTF-8" }   
  
 ## The following is the translation table.
 
 %Lexicon = (
-
 
   #### admin.tmpl
         'Farsi' => 'فارسی',
@@ -25,12 +24,12 @@ sub encoding { "UTF-8" }
         'Authors' => 'نویسنده ها',
         'Active Authors' => 'نویسنده های فعال',
         'Entries' => 'نوشته ها',
-				'entries' => 'نوشته ا',
-				'entry' => 'نوشته ا',
-				'to rebuild' => 'بازسازی',
+		'entries' => 'نوشته ا',
+		'entry' => 'نوشته ا',
+		'to rebuild' => 'بازسازی',
         'Comments' => 'نظرات',
         'TrackBacks' => 'دنبالک',
-				'pings' => 'دنبالک',
+		'pings' => 'دنبالک',
         'Version' => 'نسخه',
         'Essential Links' => 'لینک های ضروری',
         'System Information' => 'اطلاعات سیستم',
@@ -40,13 +39,17 @@ sub encoding { "UTF-8" }
         'Knowledge Base' => 'پایگاه دانش مووبل تایپ',
         'Support and Documentation' => 'راهنما و پشتیبانی',
         'Professional Network' => 'شبکه کاربران حرفه ای',
-        'System Overview' => 'کلیات سیستم',
+        'System Overview' => 'مديريت سيستم',
         'From this screen, you can view information about and manage many aspects of your system across all weblogs.' => 'از طریق این بخش می توانید بسیاری از جنبه های سیستم را در تمام وبلاگ ها مشاهده و مدیریت کنید.',
         'Movable Type News' => 'اخبار جدید مووبل تایپ فارسی',
+		'Open a Help Ticket' => 'درخواست کمک و راهنمايي',
+		'Paid License Required' => 'نسخه خریداری شده مورد نیاز است',
+		
 
   #### author_actions.tmpl
         'Delete' => 'حذف',
         'Delete selected authors (d)' => 'حذف کاربر های انتخاب شده (d)',
+		'Recover Password' => 'بازيابي کلمه عبور', 
 
   #### blog_actions.tmpl
         'Delete selected weblogs (d)' => 'حذف وبلاگ های انتخاب شده (d)',
@@ -75,6 +78,7 @@ sub encoding { "UTF-8" }
         'Search &amp; Replace' => 'جستجو و جایگزینی',
         'Search & Replace' => 'جستجو و جایگزینی',
         'Search' => 'جستجو',
+		'_SEARCH_SIDEBAR' => 'جستجو',
         'View Activity Log' => 'گزارش فعالیت سیستم',
         'Activity Log' => 'گزارش فعالیت',
         'Import &amp; Export Entries' => 'ورود و صدور نوشته ها',
@@ -108,7 +112,8 @@ sub encoding { "UTF-8" }
         'Cancel' => 'انصراف',
         'Post' => 'ارسال نوشته',
         'scheduled' => 'زمانبندى شده',
-				'Scheduled' => 'زمانبندى شده',
+		'Scheduled' => 'زمانبندى شده',
+		'Accept' => 'پذيرش',
 
   #### bm_posted.tmpl
         'Your new entry has been saved to [_1]' => 'نوشته جدید شما در [_1] ذخیره شده',
@@ -135,8 +140,9 @@ sub encoding { "UTF-8" }
 
   #### category_add.tmpl
         'Add A Category' => 'دسته جدید...',
-        'To create a new category, enter a title in the field below, select a parent category, and click the Add button.' => 'نام دسته جدید و دسته ای که زیر آن قرار دارد را وارد کرده و سپس دکمه «اضافه» را بزنید.',
-        'Category Title:' => 'عنوان دسته:',
+		'Add a Category' => 'دسته جدید...',
+        'To create a new category, enter a title in the field below, select a parent category, and click the Add button.' => 'براي ايجاد يک دسته جديد ابتدا عنوان آن و سپس دسته ای را که میخواهید در زیر آن قرار بگیرد وارد کرده و در انتها آن را ذخیره کنید.',
+		'Category Title:' => 'عنوان دسته:',
         'Parent Category:' => 'دسته پدری:',
         'Top Level' => 'بالاترین سطح',
         'Add' => '   اضافه    ',
@@ -271,7 +277,7 @@ sub encoding { "UTF-8" }
         'Please click the Save Changes button below to enable authentication.' => 'لطفا برای فعال کردن معتبر سازی بر روی کلید ذخیره تغییرات در زیر کلیک کنید.',
         'Establish a link between your weblog and an authentication service. You may use TypeKey (a free service, available by default) or another compatible service.' => 'بر قراری ارتباط میان وبلاگ شما و سرویس تعیین اعتبار. شما می تونید از TypeKey (یک سرویس رایگان، در دسترس به صورت پیش فرض) یا سرویس ساز گار دیگری استفاده کنید.',
         'Require E-mail Address' => 'آدرس ایمیل لازم است',
-        'If enabled, visitors must provide a valid e-mail address when commenting.' => 'اگر فعال شود، بازدید کنندگان در هنگام نظر دهی می بایست یک آدرس ایمیل معتبر وارد کنند.',
+        'If enabled, visitors must provide a valid e-mail address when commenting.' => 'بازدیدکنندگان در هنگام نظردهی می‌بایست یک آدرس ایمیل معتبر وارد کنند.',
         'Immediately publish comments from' => 'انتشار فوری نظرات',
         'Trusted commenters only' => 'نظر دهندگان قابل اعتماد',
         'Any authenticated commenters' => 'نظردهندگان تعیین اعتبار شده',
@@ -377,6 +383,7 @@ sub encoding { "UTF-8" }
         'Danish' => 'دانمارکى',
         'Dutch' => 'هلندى',
         'English' => 'انگلیسى',
+		'US English' => 'انگلیسى',
         'Estonian' => 'استونیایی',
         'French' => 'فرانسوى',
         'German' => 'آلمانى',
@@ -499,13 +506,13 @@ sub encoding { "UTF-8" }
         'Are you sure you want to permanently delete the [quant,_1,author] from the system?' => 'آیا مطمئن هستید که می خواهید [_1] نویسنده را برای همیشه از سیستم حذف کنید؟',
         'Are you sure you want to delete the [quant,_1,comment]?' => 'آیا مطمئن هستید که می خواهید [_1] نظر را حذف کنید؟ ',
         'Are you sure you want to delete the [quant,_1,TrackBack]?' => 'آیا مطمئن هستید که می خواهید [_1] دنبالک را حذف کنید؟ ',
-        'Are you sure you want to delete the [quant,_1,entry,entries]?' => 'آیا مطمئن هستید که می خواهید [quant,_1,نوشته,نوشته] را حذف کنید؟ ',
+        'Are you sure you want to delete the [quant,_1,entry,entries]?' => 'آیا مطمئن هستید که می خواهید [_1] نوشته را حذف کنید؟ s',
         'Are you sure you want to delete the [quant,_1,template]?' => 'آیا مطمئن هستید که می خواهید [_1] قالب را حذف کنید؟ ',
-        'Are you sure you want to delete the [quant,_1,category,categories]? When you delete a category, all entries assigned to that category will be unassigned from that category.' => 'آیا مطمئن هستید که می خواهید [quant,_1, دسته,دسته] را حذف کنید؟ وقتی دسته ای را حذف می کنید نوشته های آن دسته حدف نمی شوند بلکه تنها بدون دسته می شوند.  ',
+        'Are you sure you want to delete the [quant,_1,category,categories]? When you delete a category, all entries assigned to that category will be unassigned from that category.' => 'آیا مطمئن هستید که می خواهید [_1] دسته را حذف کنید؟ وقتی دسته ای را حذف می کنید نوشته های آن دسته حدف نمی شوند بلکه تنها بدون دسته می شوند.',
         'Are you sure you want to delete the [quant,_1,template] from the particular archive type(s)?' => 'آیا مطمئن هستید که می خواهید [_1] قالب را حذف کنید؟ ',
-        'Are you sure you want to delete the [quant,_1,IP address,IP addresses] from your Banned IP List?' => 'آیا مطمئن هستید که می خواهید [quant,_1,IP آدرس,IP آدرس] را حذف کنید؟ ',
-        'Are you sure you want to delete the [quant,_1,notification address,notification addresses]?' => 'آیا مطمئن هستید که می خواهید [quant,_1, آدرس,آدرس] را حذف کنید؟ ',
-        'Are you sure you want to delete the [quant,_1,blocked item,blocked items]?' => 'آیا مطمئن هستید که می خواهید [quant,_1,موارد مسدود شده,مورد مسدود شده] را حذف کنید؟ ',
+        'Are you sure you want to delete the [quant,_1,IP address,IP addresses] from your Banned IP List?' => 'آیا مطمئن هستید که می خواهید [_1] IP آدرس را حذف کنید؟ ',
+        'Are you sure you want to delete the [quant,_1,notification address,notification addresses]?' => 'آیا مطمئن هستید که می خواهید [_1] آدرس را حذف کنید؟ ',
+        'Are you sure you want to delete the [quant,_1,blocked item,blocked items]?' => 'آیا مطمئن هستید که می خواهید [_1] مورد مسدود شده را حذف کنید؟ ',
         'Are you sure you want to delete the [quant,_1,weblog]? When you delete a weblog, all of the entries, comments, templates, notifications, and author permissions are deleted along with the weblog itself. Make sure that this is what you want, because this action is permanent.' => 'آیا مطمئن هستید که می خواهید [_1] وبلاگ را حذف کنید؟ وقتی وبلاگی را حذف می کنید علاوه بر خود وبلاگ تمامی نوشته ها، نظرات، قالب ها، آدرس های کتابچه آدرس و مجوزهای نویسندگان آن  را نیز از بین می برید پس مطمئن باشید که این واقعا همان کاری است که در نظر دارید چرا که برگشت پذیر نیست!',
 
   #### edit_author.tmpl
@@ -523,7 +530,7 @@ sub encoding { "UTF-8" }
         'Create Weblogs' => 'ساخت وبلاگ جدید',
         'Profile' => 'پروفایل',
         'Username:' => 'نام کاربری:',
-        'The name used by this author to login.' => 'نامی که نویسنده برای ورود به سیستم استفاده میکند.',
+		'The name used by this author to login.' => 'نامی که نویسنده برای ورود به سیستم استفاده میکند.',
         'Display Name:' => 'نام نمایشی:',
         "The author's published name." => 'نامی از نویسنده که منتشر می شود.',
         'Email Address:' => 'آدرس ایمیل:',
@@ -537,14 +544,17 @@ sub encoding { "UTF-8" }
         'Enter the existing password to change it.' => 'برای تغییر کلمه عبور فعلی آن را وارد کنید.',
         'New Password:' => 'کلمه عبور جدید:',
         'Initial Password:' => 'کلمه عبور اولیه:',
+		'Initial Password (*):' => 'کلمه عبور اولیه (*):',
         'Select a password for the author.' => 'برای نویسنده کلمه عبور انتخاب کنید.',
         'Password Confirm:' => 'تایید مجدد کلمه عبور:',
         'Repeat the password for confirmation.' => 'برای تایید مجددا کلمه عبور را وارد کنید.',
         'Password hint:' => '<span title="Password Hint!">یادآور کلمه عبور</span>:',
         'For password recovery.' => 'برای باز یابی کلمه عبور.',
+		'This word or phrase will be required to recover your password if you forget it.' => 'از اين کلمه و يا عبارت براي بازيابي کلمه عبور در صورتي که آن را فراموش کرده باشيد استفاده ميشود.',
         'API Password:' => 'API کلمه عبور:',
         'Reveal' => 'آشکارسازی',
         'For use with XML-RPC and Atom-enabled clients.' => ' برای استفاده از برنامه های XML-RPC و Atom-enabled',
+		'For use by Activity feeds and with XML-RPC and Atom-enabled clients.' => 'برای استفاده از برنامه های XML-RPC ،  Atom-enabledو همچنين براي دسترسي به فيدهاي توليد شده توسط سيستم.',
         'Save this author (s)' => 'ذخیره نویسنده',
         'Edit All Entries' => 'ویرایش تمام نوشته ها',
         'Blog Administrator' => 'مدیر وبلاگ',
@@ -556,7 +566,17 @@ sub encoding { "UTF-8" }
         'Manage Notification List' => 'مدیریت لیست اطلاع رسانی',
         'Send Notifications' => 'ارسال اطلاع رسانی',
         'View Activity Log For This Weblog' => 'مشاهده گزارش فعالیت وبلاگ',
-
+		'Comma' => 'کاما',
+		'Tag Delimiter:' => 'جداکننده تگ ها:',
+		"The author's preferred delimiter for entering tags." => "جداکننده مورد علاقه براي جداکردن تگ هاي هر نوشته.",
+		'Space' => 'فاصله',
+		'Username (*):' => 'نام کاربری (*):', 
+		'Email Address (*):' => 'آدرس ایمیل (*):',
+		'Password recovery word/phrase' => '<span title="Password recovery word/phrase">یادآور کلمه عبور</span>',
+		'Web Services Password:' => 'کلمه عبور مخصوص وب سرويس ها:',
+		'Add/Manage Categories' => 'مديريت دسته ها',
+		'Manage Tags' => 'مديريت تگ ها',
+		
   #### edit_blog.tmpl
         'New Weblog Settings' => 'تنظیمات وبلاگ جدید',
         'From this screen you can specify the basic information needed to create a weblog.  Once you click the save button, your weblog will be created and you can continue to customize its settings and templates, or just simply start posting.' => 'در این صفحه شما اطلاعات اساسی مورد نیاز برای ساخت یک وبلاگ جدید را وارد می کنید. به محض اینکه دکمه «ذخیره تغییرات» را بزنید وبلاگ شما ساخته می شود و در ادامه می توانید قالب ها و یا تنظیمات را تغییر داده و یا به سادگی شروع به نوشتن مطالب خود کنید.',
@@ -574,7 +594,7 @@ sub encoding { "UTF-8" }
         'Create Subcategory' => 'یک دسته جدید زیر این دسته بساز',
         'Move Category' => 'جابجایی این دسته',
         'Move' => 'جابجایی',
-        '[quant,_1,entry,entries]' => '[quant,_1,نوشته,نوشته]',
+        '[quant,_1,entry,entries]' => '[_1] نوشته',
         '[quant,_1,TrackBack]' => '[_1] دنبالک',
   
   #### edit_category.tmpl
@@ -632,7 +652,7 @@ sub encoding { "UTF-8" }
         'View all comments from this IP address' => ' نمایش تمام نظرات رسیده از این IP آدرس',
         'Test' => 'تست',
         'Score' => 'امتیاز',
-        'Final Feedback Rating' => 'میانگین امتیاز تمامی تست‌ها',
+        'Final Feedback Rating' => 'امتیاز نهايي تمامی تست‌ها',
         'Results' => 'نتایج',
         'Plugin actions' => 'امکانات پلاگین ها',
         'Plugin Actions' => 'امکانات پلاگین ها',
@@ -664,8 +684,8 @@ sub encoding { "UTF-8" }
         'Comments ([_1])' => 'نظرات ([_1])',
         'TrackBacks ([_1])' => 'دنبالک ها ([_1])',
         'Notification' => 'اطلاع رسانی',
-				'notification address' => 'عضو',
-				'notification addresses' => 'عضو',
+		'notification address' => 'عضو',
+		'notification addresses' => 'عضو',
         'Future' => 'انتشار در آینده',
         'Assign Multiple Categories' => '» تخصیص چند دسته به این نوشته',
         'Insert Email Link' => 'لینک به آدرس ایمیل',
@@ -693,6 +713,10 @@ sub encoding { "UTF-8" }
         'Include entire entry body' => 'تمام نوشته فرستاده شود ',
         'Note: If you chose to send the weblog entry, all added HTML will be included in the email.' => 'توجه: اگر می خواهید تمامی نوشته خود را بفرستید، توجه  داشته باشید که کدهای HTML نوشته شما هم فرستاده می شود.',
         'Send' => 'ارسال',
+		'(comma-delimited list)' => '<span style="font-size:10px;">(تگ ها را با کاما از هم جدا کنید.)</span>',
+		'(space-delimited list)' => '<span style="font-size:10px;">(تگ ها را با فاصله از هم جدا کنید.)</span>',
+		'(untitled)' => '(بی‌عنوان)',
+		 
   
   #### edit_permissions.tmpl
         'Author Permissions' => 'مجوز های نویسنده',
@@ -718,7 +742,7 @@ sub encoding { "UTF-8" }
         'Source Title:' => 'عنوان منبع:',
         'Target Entry:' => 'نوشته مقصد:',
         'View all TrackBacks on this entry' => 'نمایش تمام دنبالک های این نوشته',
-        'Target Category:' => 'دسته مقصد',
+        'Target Category:' => 'دسته مقصد:',
         'Category no longer exists' => 'دسته وجود ندارد',
         'View all TrackBacks with this status' => 'نمایش تمامی دنبالک‌ها با این وضعیت',
         'Search for other TrackBacks from this site' => 'جستجو برای دنبالک‌های دیگری که از سایتی با این نام رسیده‌اند',
@@ -778,7 +802,7 @@ sub encoding { "UTF-8" }
   #### entry_table.tmpl
         'Author' => 'نویسنده',
         'author' => 'نویسنده ا',
-				'authors' => 'نویسنده ا',
+		'authors' => 'نویسنده ا',
         'Only show draft entries' => 'نمایش نوشته های پیش نویس شده',
         'Only show published entries' => 'نمایش نوشته های منتشر شده',
         'Only show future entries' => 'نمایش نوشته های آینده',
@@ -798,12 +822,14 @@ sub encoding { "UTF-8" }
         'Weblogs:' => 'وبلاگ ها:',
         'Go' => '  برو  ',
         'System-wide listing' => 'لیست کلی سیستم',
+		'Go to:' => 'برو به:',
+		'Select a blog' => 'انتخاب کنید...',
   
   #### import.tmpl
         'Import/Export' => 'ورود و صدور نوشته ها',
         'Transfer weblog entries into Movable Type from other blogging tools or export your entries to create a backup or copy.' => 'انتقال نوشته های وبلاگ به مووبل تایپ از سایر ابزار های وبلاگ نویسی یا صدور نوشته هی شما برای ایجاد پشتیبان یا کپی.',
         'Import Entries' => 'وارد کردن نوشته ها به سیستم',
-        'Export Entries' => 'صادر کردن نوشته ها ',
+        'Export Entries' => 'صادر کردن نوشته ها',
         '_USAGE_IMPORT' => 'با استفاده از مکانیزم Import می توانید نوشته های قدیمی خود در سایر سیستم های مدیریت محتوا مانند Wordpress، Blogger، pMachine و یا Persianblog را به راحتی به وبلاگ مورد نظر خود در مووبل تایپ اضافه کنید. راهنمای مووبل تایپ توضیحات مفصل و کاملی در مورد این مکانیزم داده است که می توانید مطالعه کنید.<br />با استفاده از فرم زیر می‌توانید نوشته های خود را، که از سیستم مدیریت محتوای قدیمی خود Export کرده‌اید و در شاخه مناسب در مووبل تایپ قرار داده اید، به راحتی در وبلاگ مورد نظر Import کنید.<br />لطفا قبل از استفاده از فرم زیر راهنمای مووبل تایپ را در مورد Import/Export به طور کامل مطالعه فرمایید.',
         'Import entries as me' => 'من نویسنده تمامی نوشته های وارد شده باشم.',
         'Password (required if creating new authors):' => 'کلمه عبور <br />(در صورتی که نویسنده تمامی نوشته ها خودتان هستید نیازی به پر کردن این فیلد نیست)',
@@ -819,10 +845,11 @@ sub encoding { "UTF-8" }
         'End title HTML (optional):' => 'End title HTML (اختیاری):',
         'Export Entries From [_1]' => 'صادر کردن نوشته ها از وبلاگ « [_1] »',
         'Export Entries to Tangent' => 'صادر کردن نوشته ها به یک سرور مجاور',
-				'_USAGE_EXPORT_1' => 'صدور نوشته ها از مووبل تایپ به شما این امکان را می دهد که از نوشته های وبلاگ برای خودتان <b>پشتیبان</b> تهیه کنید. این کار باعث امنیت بیشتر نوشته های شما و تضمین سالم ماندن آنها، حتی در صورت بروز مشکلات حاد برای وب سرور، می شود. قالب اطلاعات صادر شده طوری است که می توان به راحتی و بدون هیچ مشکلی آنها دوباره وارد سیستم کرد ( با استفاده از متد ورود که در بالا آمده است). علاوه بر تهیه پشتیبان با استفاده از صدور نوشته ها می توانید نوشته های مختلف خود را <b>بین وبلاگ های مختلف جا به جا کنید</b>.',
+		'_USAGE_EXPORT_1' => 'صدور نوشته ها از مووبل تایپ به شما این امکان را می دهد که از نوشته های وبلاگ برای خودتان <b>پشتیبان</b> تهیه کنید. این کار باعث امنیت بیشتر نوشته های شما و تضمین سالم ماندن آنها، حتی در صورت بروز مشکلات حاد برای وب سرور، می شود. قالب اطلاعات صادر شده طوری است که می توان به راحتی و بدون هیچ مشکلی آنها دوباره وارد سیستم کرد ( با استفاده از متد ورود که در بالا آمده است). علاوه بر تهیه پشتیبان با استفاده از صدور نوشته ها می توانید نوشته های مختلف خود را <b>بین وبلاگ های مختلف جا به جا کنید</b>.',
         '_USAGE_EXPORT_2' => 'برای صدور نوشته های خود، روی لینک زیر کلیک کنید (صادر کردن نوشته ها از وبلاگ « [_1] »). برای ذخیره اطلاعات صادر شده در یک فایل روی کامپیوتر خودتان کافی است کلید <code>option</code> را در سیستم های Macintosh و یا کلید <code>Shift</code> را در کامپیوتر های PC نگهداشته و بر روی لینک زیر کلیک کنید. علاوه بر این روش می توانید از روش Copy/Paste برای انتقال اطلاعات به یک فایل روی کامپیوتر خودتان استفاده کنید. (<a href="#" onclick="openManual(\'export_ie\')">لطفا حتما این قسمت از راهنما را درباره صدور نوشته ها از Internet Explorer بخوانید.</a>)',
-				'_USAGE_EXPORT_3' => 'با کلیک کردن روی لینک زیر می توانید تمام نوشته های خود را به یک سرور مجاور صادر کن.',
-
+		'_USAGE_EXPORT_3' => 'با کلیک کردن روی لینک زیر می توانید تمام نوشته های خود را به یک سرور مجاور صادر کن.',
+		'Importing from another system?' => 'ورود نوشته‌ها از یک سیستم دیگر غیر از مووبل تای‍‍‍پ',
+		
   #### install.tmpl
         'Welcome to Movable Type!' => 'به مووبل تایپ خوش آمدید!',
         'Before you can begin blogging, we need to complete your installation by initializing your database.' => 'پیش از اینکه بتوانید کار با وبلاگ را آغاز کنید، باید پایگاه داده ساخته و آماده کار شود.',
@@ -847,11 +874,12 @@ sub encoding { "UTF-8" }
         'Created By' => 'ساخته شده توسط',
         'Last Entry' => 'آخرین نوشته',
         'System' => 'سیستم',
+		'Recover Password(s)' => 'بازيابي کلمه عبور',
 
   #### list_banlist.tmpl
         'IP Banning Settings' => 'تنظیمات IP بستن',
         'This screen allows you to ban comments and TrackBacks from specific IP addresses.' => 'در این صفحه می توانید نظرات و دنبالک ها از یک آدرس IP خاص را تحریم کنید.',
-        'You have banned [quant,_1,address,addresses].' => 'شما [quant,_1,آدرس,آدرس] محروم شده دارید.',
+        'You have banned [quant,_1,address,addresses].' => 'شما [_1] آدرس محروم شده دارید.',
         'You have added [_1] to your list of banned IP addresses.' => 'شما IP [_1] را به لیست IP های بسته شده خودتان اضافه کردید.',
         'You have successfully deleted the selected IP addresses from the list.' => 'IP (های) انتخاب شده را با موفقیت از لیست حذف کردید.',
         'Ban New IP Address' => 'بستن آدرس IP جدید',
@@ -875,7 +903,7 @@ sub encoding { "UTF-8" }
         'Check All' => 'انتخاب همه',
         'Uncheck All' => 'انتخاب هیچ',
         'Previous [_1]' => '[_1]&nbsp;&nbsp;تای قبلی',
-        '[quant,_1,blocked item,blocked items]' => '[quant,_1,مورد مسدود شده,موارد مسدود شده]',
+        '[quant,_1,blocked item,blocked items]' => '[_1] مورد مسدود شده',
         'all blocked items' => 'تمام موارد مسدود شده',
         'Next [_1]' => '[_1]&nbsp;&nbsp;تای بعدی',
   
@@ -886,6 +914,7 @@ sub encoding { "UTF-8" }
         "What's installed, access to more." => 'لیستی از پلاگین های موجود در سیستم.',
         'Multi-weblog entry listing.' => 'لیست نوشته های تمام وبلاگ های شما.',
         'Multi-weblog comment listing.' => 'لیست نظرات تمام وبلاگ های شما.',
+		'Multi-weblog tag listing.' => 'لیست تگ‌های تمام وبلاگ های شما.',
         'Multi-weblog TrackBack listing.' => 'لیست دنبالک های تمام وبلاگ های شما.',
         'System-wide configuration.' => 'تنظیمات کلی سیستم.',
         'Find everything. Replace anything.' => 'جستجوی همه چیز، جایگزینی هر چیز!',
@@ -897,8 +926,9 @@ sub encoding { "UTF-8" }
         'My Weblogs' => 'وبلاگ های من',
         'Important:' => 'توجه:',
         'Configure this weblog.' => 'این وبلاگ را تنظیم کنید',
-        'Create a new entry' => 'ارسال یک نوشته جدید',
+        'Create a new entry' => 'ارسال نوشته جدید',
         'on this weblog' => 'در این وبلاگ',
+		'Create a new entry on this weblog' => 'ارسال یک نوشته جدید در این وبلاگ',
         'Show Display Options' => 'تغییر نحوه نمایش',
         'Display Options' => 'تنظیمات نمایشی',
         'Sort By:' => 'مرتب سازی بر اساس:',
@@ -913,6 +943,8 @@ sub encoding { "UTF-8" }
   #### list_comment.tmpl
         '_USAGE_COMMENTS_LIST' => 'لیست نظراتِ « [_1] ». با کلیک کردن روی متن هر نظر می توانید آن را تغییر دهید. ',
         '_USAGE_COMMENTS_LIST_ALL_WEBLOGS' => 'لیست تمامی نظرات موجود در سیستم در زیر آمده است.',
+		'_USAGE_COMMENTS_LIST_BLOG' => 'لیست نظراتِ « [_1] ». با کلیک کردن روی متن هر نظر می توانید آن را تغییر دهید. ',
+        '_USAGE_COMMENTS_LIST_OVERVIEW' => 'لیست تمامی نظرات موجود در سیستم در زیر آمده است.',
         'The selected comment(s) has been published.' => 'نظرات انتخاب شده منتشر شد.',
         'The selected comment(s) has been unpublished.' => 'نظرات انتخاب شده پیش نویس شد.',
         'The selected comment(s) has been junked.' => 'نظرات انتخاب شده هرزه شد.',
@@ -933,6 +965,10 @@ sub encoding { "UTF-8" }
         'unauthenticated' => 'غیر قابل اعتماد',
         'No comments could be found.' => 'هیچ نظری یافت نشد.',
         'No junk comments could be found.' => 'هیچ نظر هرزه ای یافت نشد.',
+		'Showing only comments where [_1] is [_2].' => 'نمايش نظراتي که [_1] آنها [_2] است.',
+		'(Showing all comments.)' => '(در حال نمايش تمام نظرات)',
+		'Comment Feed' => 'فيد نظرات',
+		'Empty Junk Folder' => 'حذف تمامي نظرات هرزه',
   
   #### list_commenters.tmpl
         'Authenticated Commenters' => 'نظر دهندگان تعیین اعتبار شده',
@@ -951,8 +987,10 @@ sub encoding { "UTF-8" }
   
   #### list_entry.tmpl
         '_USAGE_LIST_POWER' => 'در زیر لیست نوشته های شما در«[_1]» در حالت ویرایش دسته ای آمده است. در فرم زیر می توانید هر کدام از مقادیر نمایش داده شده را تغییر دهید  و پس از انجام تغییرات دلخواه دکمه ذخیره را فشار دهید.گزینه های  فیلتر و  صفحه بندی هم مانند حالت عادی کار می کنند که با آن آشنایی دارید..',
-        '_USAGE_LIST' => 'در زیر لیست نوشته های شما در «[_1]» آمده است. می توانید با کلیک کردن بر روی عنوان هر یک از این نوشته ها، آن را ویرایش کرده و تغییر دهید. برای فیلتر کردن نوشته ها، ابتدا از لیست پایین کشیدنی اول (بنا به خواست خودتان) یکی از مقادیر "دسته"،"نویسنده"یا "وضعیت" را انتخاب کنید، سپس در فیلد دوم مقدار خاص آن را تعیین کنید.مثلا از اولی «وضعیت» و از دومی «پیش نویس» را انتخاب کنید، با این کار مووبل تایپ لیست تمامی نوشته هایی که تا به حال نوشته اید ولی منتشر نکرده اید را نمایش می دهد.<br /> با استفاده از لیست پایین جدول هم  می توانید تعداد سطر های جدول در هر صفحه را تنظیم نمایید.<br /> ',
+        '_USAGE_LIST' => '',
         '_USAGE_LIST_ALL_WEBLOGS' => 'لیستی از تمامی نوشته‌های موجود در سیستم.',
+        '_USAGE_ENTRY_LIST_BLOG' => '',
+        '_USAGE_ENTRY_LIST_OVERVIEW' => 'لیستی از تمامی نوشته‌های موجود در سیستم.',
         'Open power-editing mode' => '<span title="Open power-editing mode">» ویرایش نوشته ها به صورت دسته ای </span>',
         'Your entry has been deleted from the database.' => 'نوشته شما حذف شد.',
         'Show draft entries.' => 'نمایش پیش نویس ها',
@@ -963,10 +1001,20 @@ sub encoding { "UTF-8" }
         'No entries could be found.' => 'هیچ نوشته ای یافت نشد.',
         'Publish Entries' => 'انتشار نوشته ها',
         'Unpublish Entries' => 'پیش نویس نوشته ها',
+		'Add Tags...' => 'اضافه کردن تگ...',
+		'Remove Tags...' => 'حذف تگ ...',
+		'Entry Feed' => 'فيد نوشته ها',
+		'None.' => 'ندارد.',
+		'Showing only entries where [_1] is [_2].' => 'نمايش نوشته هايي که [_1] آنها [_2] است.',
+		'(Showing all entries.)' => '(در حال نمايش تمام نوشته ها)',
+		'tag' => 'تگ',
+		'None.' => 'ندارد.',
+		
+
   
   #### list_notification.tmpl
         'Below is the list of people who wish to be notified when you post to your site. To delete an address, check the Delete box and press the Delete button.' => 'در زیر لیستی از خوانندگان شما که علاقه مندند از به روز شدن وب سایت شما مطلع شوند آمده است. هر کسی را که بخواهید می توانید از لیست حذف کنید.',
-        'You have [quant,_1,user,users,no users] in your notification list.' => 'تعداد اعضای کتابچه آدرس شما <b>[quant,_1,نفر,نفر,هنوز صفر]</b> می باشد',
+        'You have [quant,_1,user,users,no users] in your notification list.' => 'تعداد اعضای کتابچه آدرس شما [_1] نفر می باشد',
         'You have added [_1] to your notification list.' => 'شما [_1] را به کتابچه آدرس خود اضافه کردید.',
         'You have successfully deleted the selected notifications from your notification list.' => 'آدرس های مورد نظر شما با موفقیت حذف شد.',
         'Create New Notification' => 'اضافه کردن یک عضو جدید',
@@ -1009,8 +1057,9 @@ sub encoding { "UTF-8" }
         'Registered Plugins' => 'پلاگین های ثبت شده',
         '_USAGE_PLUGINS' => 'این لیست تمام پلاگین هایی می باشد که در حال حاضر توسط مووبل تایپ ثبت شده.',
         'To download more plugins, check out the' => 'برای دریافت پلاگین های بیشتر، مراجعه کنید به',
+		'To download more plugins, check out the <a href="http://www.sixapart.com/pronet/plugins/">Six Apart Plugin Directory</a>.' => 'برای دریافت پلاگین های بیشتر، به <a href="http://www.sixapart.com/pronet/plugins/">دایرکتوری پلاگین Six Apart</a> مراجعه کنيد.',
         'Six Apart Plugin Directory' => 'دایرکتوری پلاگین Six Apart',
-        'Disable Plugins' => 'غیر فعال کردن پلاگین ها',
+        'Disable Plugins' => 'غیر فعال کردن تمام پلاگين ها',
         'Enable Plugins' => 'فعال کردن پلاگین ها',
         'Error' => 'خطا',
         'Failed to Load' => 'فراخوانی شکست خورد',
@@ -1070,6 +1119,19 @@ sub encoding { "UTF-8" }
   #### log_actions.tmpl
         'Reset Activity Log' => 'پاک کردن گزارش فعالیت ها ',
   
+	## ./tmpl/cms/list_tags.tmpl
+    'Your tag changes and additions have been made.' => 'تغييرات مورد نظر شما بر روي تگ ها انجام شد.', 
+    'You have successfully deleted the selected tags.' => 'تگ هاي انتخاب شده حذف شدند.', 
+    'Tag Name' => 'عنوان تگ', 
+    'Click to edit tag name' => 'براي ويرايش عنوان اين تگ روي آن کليک کنيد', 
+    'Rename' => 'ذخيره عنوان جديد',
+    'Show all entries with this tag' => 'نمايش ليست تمامي نوشته هايي که چنين تگي دارند', 
+    'tag' => 'تگ', 
+    'tags' => 'تگ ها',
+    'Delete selected tags (d)' => 'حذف تگ هاي انتخاب شده (d)', 
+    'No tags could be found.' => 'هيچ تگي يافت نشد!', 
+	'_USAGE_TAGS' => 'از تگ ها مي توانيد براي دسته بندي سريعتر و نمايش بهتر نوشته هاي وبلاگ خود استفاده کنيد. يافتن نوشته هاي قديمي که تگ گذاري شده اند بسيار ساده تر و سريع تر است.',
+
   #### log_table.tmpl
         'Log Message' => 'شرح فعالیت',
   
@@ -1093,9 +1155,15 @@ sub encoding { "UTF-8" }
         'Movable Type User Manual' => '» راهنمای کاربران مووبل تایپ<br />',
         'Movable Type Technical Support' => '» پشتبانی فنی مووبل تایپ<br />',
         'Movable Type Support Forum' => '» انجمن کاربران مووبل تایپ ',
+		'Movable Type Community Forums' => '» انجمن کاربران مووبل تایپ ',
         'This welcome message is configurable.' => '<br /><font size=1>این پیغام خوش آمد گویی قابل تنظیم است.</font>',
         'Change this message.' => '» تغییر این قسمت صفحه',
-  
+		'Recent Entries' => 'آخرین نوشته ها',
+		'Recent Comments' => 'آخرین نظرات',
+		'Recent TrackBacks' => 'آخرین دنبالک ها',
+		'Here is an overview of [_1].' => 'لیستی از آخرین وقایع رخ داده در وبلاگِ «[_1]»',
+		
+
   #### notification_table.tmpl
         'Email Address' => 'آدرس ایمیل',
         'Date Added' => 'تاریخ اضافه شدن',
@@ -1120,10 +1188,10 @@ sub encoding { "UTF-8" }
         'Date Display:' => 'نمایش تاریخ:',
         'Relative' => 'نسبی',
         'Full' => 'مطلق',
-        'Newer' => 'جدیدتر |',
+        'Newer' => 'جدیدتر   ',
         'Showing:' => 'در حال نمایش:',
         'of' => 'از',
-        'Older' => '| قدیمی تر',
+        'Older' => '   قدیمی تر',
 
   #### ping_table.tmpl
         'From' => 'از',
@@ -1148,7 +1216,8 @@ sub encoding { "UTF-8" }
         'Index Template: [_1]' => 'قالب اصلی: [_1]',
         'Rebuild Indexes Only' => 'فقط باز سازی صفحات اصلی',
         'Rebuild [_1] Archives Only' => 'فقط باز سازی آرشیوهای [_1] ',
-        "entry '" => "نوشته '",
+        "entry '[_1]'" => "نوشته '[_1]'",
+		
         "index template '" => "قالب اصلی '",
   
   #### rebuilding.tmpl
@@ -1250,6 +1319,8 @@ sub encoding { "UTF-8" }
         'Local Archive Path' => 'Local Archive Path',
         'Local Site Path' => 'Local Site Path',
         'Upload' => 'ارسال',
+		'Path:' => 'مسير:',
+		'Set Upload Path' => 'تنظيم محل قرار گيري فايل بر روي سرور',
 
   #### upload_complete.tmpl
         'Your file has been uploaded. Size: [quant,_1,byte].' => 'فایل شما ارسال شد. اندازه: [_1] بایت',
@@ -1263,8 +1334,8 @@ sub encoding { "UTF-8" }
         'Height:' => 'ارتفاع',
         'Constrain proportions' => 'حفظ نسبت بین طول و عرض',
         'Would you like this file to be a:' => 'حالت مورد نظر شما:',
-        'Popup Image' => 'عکس در یک صفحه جداگانه نمایش داده شود',
-        'Embedded Image' => 'عکس در همان صفحه اصلی نمایش داده شود',
+        'Popup Image' => 'در یک صفحه جداگانه نمایش داده شود',
+        'Embedded Image' => 'در همان صفحه اصلی نمایش داده شود',
 
   #### upload_confirm.tmpl
         'A file named \'[_1]\' already exists. Do you want to overwrite this file?' => 'فایلی با نام \'[_1]\' موجود است. آیا می خواهید این فایل را رو نویسی کنید؟',
@@ -1512,14 +1583,18 @@ sub encoding { "UTF-8" }
 
 	#### FarsiSaaz Plugin
 		'Template layout:' => 'قالب‌های پیش‌فرض:',
-		'Right to Left (Farsi)' => 'راست به چپ (فارسی)',
-		'Left to Right (English)' => 'چپ به راست (انگلیسی)',
-		'Define the layout of dafault templates. If you choose right to left, default template texts will be translated to Farsi.' => 'چیدمان قالب‌های پیش‌فرض این وبلاگ را مشخص کنید. اگر چیدمان راست به چپ را انتخاب کنید، علاوه بر چیدمان، متن قالب‌‌ها هم به فارسی ترجمه می‌شود. ',
+		'Farsi (Right to Left)' => 'فارسی (راست به چپ)',
+		'English (Left to Right)' => 'انگلیسی (چپ به راست)',
+		'Define the layout of default templates. If you choose right to left, default template texts will be translated to Farsi.' => 'چیدمان قالب‌های پیش‌فرض این وبلاگ را مشخص کنید. اگر چیدمان راست به چپ را انتخاب کنید، علاوه بر چیدمان، متن قالب‌‌ها هم به فارسی ترجمه می‌شود. ',
 		"Sorry, There's no new version available!" => "متاسفانه فعلا نسخه جدیدتری موجود نیست!",				
 		'A newer version for this plugin is available, do you want to upgrade?' => 'نسخه جدیدتری از آنچه شما استفاده می‌کنید موجود است. آیا مایلید نسخه خود را ارتقا دهید؟',				
 		'Your plugin, successfully, updated!' => 'پلاگین فارسی با موفقیت ارتقاء داده شد.',				
 			
-
+	#### MT-Farsi Plugin
+		'MT-Farsi' => 'فارسی ساز',
+		'Adding some right to left features and preparing MT for publishing in Persian.' => 'مجموعه‌ای از امکانات فارسی برای مووبل تایپ',
+		'Aziz Ashofte' => 'عزيز آشفته',
+			
 '_AUTO' => 1,
 );
 
