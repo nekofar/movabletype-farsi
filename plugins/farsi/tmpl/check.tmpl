@@ -1,0 +1,22 @@
+﻿<TMPL_INCLUDE NAME="header-popup.tmpl">
+
+<form method="post" action="update-checker.cgi">
+    <input type="hidden" name="__mode" value="update" />
+    <input type="hidden" name="magic_token" value="<TMPL_VAR NAME=MAGIC_TOKEN>" /> 
+
+<TMPL_IF NAME=UPDATE>
+	<h4 class="message" style="font-family:tahoma">
+		<img valign="bottom" src="<TMPL_VAR NAME=STATIC_URI>images/status_icons/success.gif" height="9" width="9" alt="" />&nbsp;
+		<MT_TRANS phrase="A newer version for this plugin is available, do you want to upgrade?">
+	</h4>
+	<input type="button" onclick="window.close()" value="<MT_TRANS phrase="No">" />
+	<input type="submit" value="<MT_TRANS phrase="Yes">" title="<MT_TRANS phrase="Yes">" />
+<TMPL_ELSE>
+	<h4 class="message" style="font-family:tahoma">
+		<img valign="bottom" src="<TMPL_VAR NAME=STATIC_URI>images/status_icons/error.gif" height="9" width="9" alt="" />&nbsp;
+		<MT_TRANS phrase="Sorry, There's no new version available!">
+	</h4>
+	<input type="button" onclick="window.close()" value="<MT_TRANS phrase="Close">" />
+</TMPL_IF>
+</form>
+<TMPL_INCLUDE NAME="footer-popup.tmpl">
