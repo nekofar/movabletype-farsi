@@ -79,14 +79,16 @@ sub gregorian_to_jalali($$$) # ( @_[0] = Gregorian_Year , @_[1] = Gregorian_Mont
 sub g2jstrftime($$) # just Like strftime = ( @_[0] = pattern, @_[1] = timestamp )
 {
   my $pattern = $_[0];
-  	
   my $g_y = substr($_[1],0,4);
+  my $g_y = sprintf("%04d", $g_y);
   my $g_m = substr($_[1],4,2);
   my $g_d = substr($_[1],6,2);
   my $hour_24 = substr($_[1],8,2);
   my $hour_12 = $hour_24%12;
   my $min = substr($_[1],10,2);
+  my $min = sprintf("%02d", $min);
   my $sec = substr($_[1],12,2);
+  my $sec = sprintf("%02d", $sec);
   my $g_d_s = strftime ("%a",0,0,0,$g_d,$g_m-1,$g_y-1900);
   my $t_s = '&#1589;&#1576;&#1581;';
   $t_s = '&#1576;&#1593;&#1583;&#1575;&#1586;&#1592;&#1607;&#1585;' if ( $hour_24 >= 12 );
@@ -94,11 +96,11 @@ sub g2jstrftime($$) # just Like strftime = ( @_[0] = pattern, @_[1] = timestamp 
 
   my ($j_d_s, $j_d_i, $j_d_w);
   if ( $g_d_s eq 'Sat' ) { ($j_d_s, $j_d_i) = ('&#1588;&#1606;&#1576;&#1607;', '&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '0'; }
-  elsif ( $g_d_s eq 'Sun' ) { ($j_d_s, $j_d_i) = ('&#1740;&#1705;&#1588;&#1606;&#1576;&#1607;', '1 &#1740;&#1705;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '1'; }
-  elsif ( $g_d_s eq 'Mon' ) { ($j_d_s, $j_d_i) = ('&#1583;&#1608;&#1588;&#1606;&#1576;&#1607;', '2 &#1583;&#1608;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '2'; }
-  elsif ( $g_d_s eq 'Tue' ) { ($j_d_s, $j_d_i) = ('&#1587;&#1607; &#1588;&#1606;&#1576;&#1607;', '3 &#1587;&#1607; &#1588;&#1606;&#1576;&#1607;'); $j_d_w = '3'; }
-  elsif ( $g_d_s eq 'Wed' ) { ($j_d_s, $j_d_i) = ('&#1670;&#1607;&#1575;&#1585;&#1588;&#1606;&#1576;&#1607;', '4 &#1670;&#1607;&#1575;&#1585;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '4'; }
-  elsif ( $g_d_s eq 'Thu' ) { ($j_d_s, $j_d_i) = ('&#1662;&#1606;&#1580;&#1588;&#1606;&#1576;&#1607;', '5 &#1662;&#1606;&#1580;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '5'; }
+  elsif ( $g_d_s eq 'Sun' ) { ($j_d_s, $j_d_i) = ('&#1740;&#1705;&#1588;&#1606;&#1576;&#1607;', '۱ &#1740;&#1705;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '1'; }
+  elsif ( $g_d_s eq 'Mon' ) { ($j_d_s, $j_d_i) = ('&#1583;&#1608;&#1588;&#1606;&#1576;&#1607;', '۲ &#1583;&#1608;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '2'; }
+  elsif ( $g_d_s eq 'Tue' ) { ($j_d_s, $j_d_i) = ('&#1587;&#1607; &#1588;&#1606;&#1576;&#1607;', '۳ &#1587;&#1607; &#1588;&#1606;&#1576;&#1607;'); $j_d_w = '3'; }
+  elsif ( $g_d_s eq 'Wed' ) { ($j_d_s, $j_d_i) = ('&#1670;&#1607;&#1575;&#1585;&#1588;&#1606;&#1576;&#1607;', '۴ &#1670;&#1607;&#1575;&#1585;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '4'; }
+  elsif ( $g_d_s eq 'Thu' ) { ($j_d_s, $j_d_i) = ('&#1662;&#1606;&#1580;&#1588;&#1606;&#1576;&#1607;', '۵ &#1662;&#1606;&#1580;&#1588;&#1606;&#1576;&#1607;'); $j_d_w = '5'; }
   elsif ( $g_d_s eq 'Fri' ) { ($j_d_s, $j_d_i) = ('&#1580;&#1605;&#1593;&#1607;', '&#1580;&#1605;&#1593;&#1607;'); $j_d_w = '6'; }
 
   my $j_m_s;
@@ -118,36 +120,36 @@ sub g2jstrftime($$) # just Like strftime = ( @_[0] = pattern, @_[1] = timestamp 
   my $j_d_pad = sprintf("%02d", $j_d);
   my $j_m_pad = sprintf("%02d", $j_m);
   my $hour_12_pad = sprintf("%02d", $hour_12); 
+  my $hour_24_pad = sprintf("%02d", $hour_24); 
   my $j_y_s = substr ($j_y,2,2);
   my $j_m_i = $j_m_s."&#1605;&#1575;&#1607;";
-
+  my @day_of_year = ( 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 );  	
+  my $j_doy = $day_of_year[ $j_m - 1 ] + $j_d; 
+ 
 $pattern =~ s/\%a/$j_d_i/g;  
 $pattern =~ s/\%A/$j_d_s/g;
-$pattern =~ s/\%b/$j_m_s/g;
-$pattern =~ s/\%B/$j_m_i/g;
+$pattern =~ s/\%b/$j_m_i/g;
+$pattern =~ s/\%B/$j_m_s/g;
 $pattern =~ s/\%d/$j_d_pad/g;
-$pattern =~ s/\%e/$j_m/g;
-$pattern =~ s/\%H/$hour_24/g;
-$pattern =~ s/\%k/$hour_24/g; 
+$pattern =~ s/\%e/$j_d/g;
+$pattern =~ s/\%H/$hour_24_pad/g;
 $pattern =~ s/\%I/$hour_12_pad/g; 
+$pattern =~ s/\%j/$j_doy/g;    	     
+$pattern =~ s/\%k/$hour_24/g; 
 $pattern =~ s/\%l/$hour_12/g;
 $pattern =~ s/\%m/$j_m_pad/g; 
 $pattern =~ s/\%M/$min/g;
 $pattern =~ s/\%p/$t_s/g;
 $pattern =~ s/\%S/$sec/g;
-$pattern =~ s/\%Y/$j_y/g;
-$pattern =~ s/\%y/$j_y_s/g;
 $pattern =~ s/\%w/$j_d_w/g;
+$pattern =~ s/\%y/$j_y_s/g;
+$pattern =~ s/\%Y/$j_y/g;
+
 $pattern =~ s/\%x/$j_d $j_m_s $j_y/g;
 $pattern =~ s/\%X/$hour_12:$min $t_s/g;
 $pattern =~ s/\%z/$j_y$j_m_pad$j_d_pad$hour_24$min$sec/g;
-#  $pattern =~ s/\%j/$hour_12/g;    	     #Day of the year
 
-# for backward compatibility
-$pattern =~ s/\%s/$sec/g;
-$pattern =~ s/\%t/$t_s/g;
-  
-  return $pattern;
+return $pattern;
 }
 
 sub j2g_ts($) # just Like strftime = ( @_[0] = pattern, @_[1] = timestamp )
@@ -233,16 +235,16 @@ sub jalali_to_gregorian($$$) # ( @_[0] = Jalali_Year , @_[1] = Jalali_Month , @_
 sub farsi_number($) # ( @_[0] = String contains english numbers to covert to farsi numbers )
 {
   my %table;
-  $table{"\x30"}="\xDB\xB0"; # Persian 0
-  $table{"\x31"}="\xDB\xB1"; # Persian 1
-  $table{"\x32"}="\xDB\xB2"; # Persian 2
-  $table{"\x33"}="\xDB\xB3"; # Persian 3
-  $table{"\x34"}="\xDB\xB4"; # Persian 4
-  $table{"\x35"}="\xDB\xB5"; # Persian 5
-  $table{"\x36"}="\xDB\xB6"; # Persian 6
-  $table{"\x37"}="\xDB\xB7"; # Persian 7
-  $table{"\x38"}="\xDB\xB8"; # Persian 8
-  $table{"\x39"}="\xDB\xB9"; # Persian 9
+  $table{"0"}="۰"; # Persian 0
+  $table{"1"}="۱"; # Persian 1
+  $table{"2"}="۲"; # Persian 2
+  $table{"3"}="۳"; # Persian 3
+  $table{"4"}="۴"; # Persian 4
+  $table{"5"}="۵"; # Persian 5
+  $table{"6"}="۶"; # Persian 6
+  $table{"7"}="۷"; # Persian 7
+  $table{"8"}="۸"; # Persian 8
+  $table{"9"}="۹"; # Persian 9
   my $strout = '';
   my $char = 0;
   foreach (split //,$_[0])

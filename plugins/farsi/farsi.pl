@@ -52,10 +52,7 @@ MT->add_callback('MT::App::CMS::AppTemplateSource.login'		  , 8, $plugin, \&logi
 MT->add_callback('MT::App::CMS::AppTemplateSource.list_blog'	  , 9, $plugin, \&listblog_tem);
 MT->add_callback('MT::App::CMS::AppTemplateParam'				  , 9, $plugin, \&pager_params);
 MT->add_callback('MT::App::CMS::AppTemplateParam.admin'			  , 9, $plugin, \&admin_params);
-#MT->add_callback('MT::App::CMS::AppTemplateParam.list_tags'		  , 9, $plugin, \&listtags_params);
-#MT->add_callback('MT::App::CMS::AppTemplateParam.list_entry'	  , 9, $plugin, \&entrytable_params);
-#MT->add_callback('MT::App::CMS::AppTemplateParam.list_comment'	  , 9, $plugin, \&entrytable_params);
-#MT->add_callback('MT::App::CMS::AppTemplateParam.list_commenters' , 9, $plugin, \&commentertable_params);
+MT->add_callback('MT::App::CMS::AppTemplateParam.list_tags'		  , 9, $plugin, \&listtags_params);
 MT->add_callback('MT::App::CMS::AppTemplateParam.list_blog'		  , 9, $plugin, \&listblog_params);
 MT->add_callback('MT::App::CMS::AppTemplateParam.list_author'	  , 9, $plugin, \&listauthor_params);
 MT->add_callback('MT::App::CMS::AppTemplateParam.system_list_blog', 9, $plugin, \&systemlistblog_params);
@@ -83,6 +80,7 @@ my $language_symbol;
 	if ($is_j) {
 		local $SIG{__WARN__} = sub {  }; 
 		*MT::App::CMS::format_ts = \&_format_ts;
+		*MT::App::CMS::relative_date = \&_relative_date;
 	}
 }
 
@@ -614,34 +612,19 @@ sub fa_commentertable {
 	}
 }
 
-# sub entrytable_params {
-	# my ($cb, $app, $param) = @_;
-	# my $author = $app->{author};
-	# if ($author) {
-		# if  ($author->preferred_language eq 'fa')  {
-			# $param->{'is_editable'} = 0;
-			# fa_entrytable(@$param{'entry_table'});
-# }}}
-# sub fa_entrytable {
-	# my ($entries) = @_;
-	# for my $entry_row (@$entries) {
-		# $entry_row->{'created_on_relative'} = farsi_number($entry_row->{'created_on_relative'});
-	# }
-# }
-
-# sub listtags_params {
-	# my ($cb, $app, $param) = @_;
-	# my $author = $app->{author};
-	# if ($author) {
-		# if  ($author->preferred_language eq 'fa')  {
-			# fa_tagtable(@$param{'tag_table'} );
-# }}}
-# sub fa_tagtable {
-	# my ($tags) = @_;
-	# for my $tag_row (@$tags) {
-		# $tag_row->{'tag_count'} = farsi_number($tag_row->{'tag_count'});		
-	# }
-# }
+sub listtags_params {
+	my ($cb, $app, $param) = @_;
+	my $author = $app->{author};
+	if ($author) {
+		if  ($author->preferred_language eq 'fa')  {
+			fa_tagtable($param->{tag_table}[0]{object_loop});
+}}}
+sub fa_tagtable {
+	my ($tags) = @_;
+	for my $tag_row (@$tags) {
+		$tag_row->{'tag_count'} = farsi_number($tag_row->{'tag_count'});		
+	}
+}
 
 sub editentry_params {
 	my ($cb, $app, $param) = @_;
@@ -784,6 +767,57 @@ HTML
 }
 
 ############################################################
+
+sub _relative_date {
+    my ($ts1, $ts2, $blog, $fmt) = @_;
+
+    ##TBD: Fix this
+    my $ts = $ts1;
+    $ts1 = MT::Util::ts2epoch($blog, $ts1);
+    return unless $ts1;
+
+    my $future = 0;
+    my $delta = $ts2 - $ts1;
+    if ($delta < 0) {
+        $future = 1;
+        $delta = $ts1 - $ts2;
+    }
+    if ($delta <= 60) {
+        $future ? MT->translate("Less than 1 minute from now") : MT->translate("Less than 1 minute ago");
+    } elsif ($delta <= 86400) {
+        ##less than 1 day
+        my $hours = int($delta / 3600);
+		if ($hours) {$hours = farsi_number($hours);}
+        my $min = int(($delta % 3600) / 60);
+		if ($min) {$min = farsi_number($min);}
+        my $result;
+        if ($hours && $min) {
+            $result = $future ? MT->translate("[quant,_1,hour], [quant,_2,minute] from now", $hours, $min) : MT->translate("[quant,_1,hour], [quant,_2,minute] ago", $hours, $min);
+        } elsif ($hours) {
+            $result = $future ? MT->translate("[quant,_1,hour] from now", $hours) : MT->translate("[quant,_1,hour] ago", $hours);
+        } elsif ($min) {
+            $result = $future ? MT->translate("[quant,_1,minute] from now", $min) : MT->translate("[quant,_1,minute] ago", $min);
+        }
+        $result;
+    } elsif ($delta <= 604800) {
+        ##less than 1 week
+        my $days = int($delta / 86400);
+		if ($days) {$days = farsi_number($days);}
+        my $hours = int(($delta % 86400) / 3600);
+        if ($hours) {$hours = farsi_number($hours);}
+		my $result;
+        if ($days && $hours) {
+            $result = $future ? MT->translate("[quant,_1,day], [quant,_2,hour] from now", $days, $hours) : MT->translate("[quant,_1,day], [quant,_2,hour] ago", $days, $hours);
+        } elsif ($days) {
+            $result = $future ? MT->translate("[quant,_1,day] from now", $days) : MT->translate("[quant,_1,day] ago", $days);
+        } elsif ($hours) {
+            $result = $future ? MT->translate("[quant,_1,hour] from now", $hours) : MT->translate("[quant,_1,hour] ago", $hours);
+        }
+        $result;
+    } else {
+        $fmt ? _format_ts($fmt, $ts) : "";
+    }
+}
 
 sub _format_ts {
     my($format, $ts, $blog, $lang) = @_;
