@@ -1,8 +1,9 @@
 #  MT-Farsi 
-#  Release 1.5 Beta 1
+#  Release 1.5 Beta 3
 #  Aziz Ashofte
 #  www.aziza.ir
-#  18 July 2006
+#
+# $Id: Readme.txt 5 2006-07-15 01:20:42Z nekofar $
 
 plugin home: http://movabletype.ir
 plugin manual: http://movabletype.ir/plugins/farsi/

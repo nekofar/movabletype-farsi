@@ -3,7 +3,7 @@
 #          Milad Nekofar (http://www.nekofar.com)
 # Released under the Artistic License
 #
-# $Id: fa.pm,v 1.9 2006/07/21 08:24:32 nekofar Exp $
+# $Id: fa.pm 5 2006-07-15 01:20:42Z nekofar $
 
 package MT::L10N::fa;
 

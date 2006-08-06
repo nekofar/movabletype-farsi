@@ -1,376 +1,264 @@
 ﻿package MT::Plugin::Jalali;
 
 use strict;
-use JalaliEX;
 use vars qw( $VERSION );
-use vars qw( %Languages );
-use vars qw( %DynamicURIs );
-use MT::Util qw( dirify start_end_day start_end_week wday_from_ts substr_wref );
 $VERSION = '1.0';
 
 require MT;
 require MT::Plugin;
+use JalaliEX;
+use MT::Template::Context;
 
 my $plugin = {
 	name                   => "<MT_TRANS phrase=\"Jalali Calendar\">",
-	description            => "<MT_TRANS phrase=\"Adds Jalali calendar and Jalali archiving to your blog and admin area.\">",
+	description            => "<MT_TRANS phrase=\"Adds Jalali calendar and Jalali archiving to your weblog.\">",
 	version                => $VERSION,
 	author_name            => "<MT_TRANS phrase=\"Aziz Ashofte\">",
 	author_link            => 'http://aziza.ir',
 	plugin_link            => 'http://www.movabletype.ir/',
-	doc_link               => 'http://www.movabletype.ir/plugins/jalaliex',
-	system_config_template => \&system_template,
+	doc_link               => 'http://www.movabletype.ir/plugins/jalalical',
 	blog_config_template   => \&blog_template,
 	settings               => new MT::PluginSettings([
-		['jcal_enabled', { Default => 1 }],
-		['b_jcal_enabled', { Default => 1, Scope => 'blog' }],
+		['jcal_enabled', { Default => 0, Scope => 'blog' }],
 	]),    
 }; 
 MT->add_plugin(new MT::Plugin($plugin));
+MT->add_callback('MT::App::CMS::AppTemplateSource.edit_blog', 4, $plugin, \&NewWeblogCalType);
+MT->add_callback('MT::App::CMS::AppTemplateSource.cfg_prefs', 9, $plugin, \&_cfg_lang);
+MT->add_callback('MT::App::CMS::AppTemplateSource.cfg_simple', 9, $plugin, \&_cfg_lang);
+MT->add_callback('CMSPostSave.blog', 5, $plugin, \&Jcal_CMSPostSave_blog);
+MT::Template::Context->add_container_tag('JCalendar', \&__hdlr_calendar);
+MT::Template::Context->add_global_filter(numbers => sub {
+        my($str, $value, $ctx) = @_;
+        if ($value eq 'farsi') { $str = farsi_number($str) }
+        $str;
+    });
 
-
+require MT::Builder;
+require MT::WeblogPublisher;
+my $mt_builder_build = \&MT::Builder::build;
+my $mt_rebuild = \&MT::WeblogPublisher::rebuild;
 {
 	local $SIG{__WARN__} = sub {  }; 
-	*MT::Util::format_ts = \&__format_ts;
-	*MT::Util::wday_from_ts = \&_wday_from_ts;
-	*MT::Util::start_end_month = \&_start_end_month;
-	*MT::Util::start_end_period = \&_start_end_period;
-	*MT::Util::archive_file_for = \&_archive_file_for;
-	*MT::WeblogPublisher::archive_file_for = \&_archive_file_for;
-	*MT::Util::get_entry = \&_get_entry;
+	*MT::Builder::build = \&farsi_builder_build;
+	*MT::WeblogPublisher::rebuild = \&farsi_rebuild;
 }
-
-sub system_template {
-my $tmpl = <<EOT;
-<div class="setting" style="direction:rtl;text-align:right;font-family:tahoma;font-size:11px;">
-	<div class="label" style="float: right;	width: 100px;	margin: 4px 5px 0 5px;	color: #333;	font-size: 11px;	font-weight: bold;	text-align: left;"></div>
-	<div class="field" style="float: right;	width: 425px;	margin: 0;">
-		<ul>
-			<li><label><input type="checkbox" value="1" name="jcal_enabled" id="jcal_enabled" class="cb" <TMPL_IF NAME="JCAL_ENABLED">checked="checked"</TMPL_IF> /> تقويم جلالي</label></li>
-		</ul>
-	<p></p>
-	</div>
-</div>
-EOT
-}
-
+	
 sub blog_template {
 my $tmpl = <<EOT;
-<div class="setting" style="direction:rtl;text-align:right;font-family:tahoma;font-size:11px;">
-	<div class="label" style="float: right;	width: 100px;	margin: 4px 5px 0 5px;	color: #333;	font-size: 11px;	font-weight: bold;	text-align: left;"></div>
-	<div class="field" style="float: right;	width: 425px;	margin: 0;">
+<div class="setting">
+  <div class="label"><label for="fa_cal_type"><MT_TRANS phrase="Calendar Type:"></label></div>
+	<div class="field">
 		<ul>
-			<li><label><input type="checkbox" value="1" name="jcal_enabled" id="jcal_enabled" class="cb" <TMPL_IF NAME="JCAL_ENABLED">checked="checked"</TMPL_IF> /> تقويم جلالي</label></li>
+			<li><label><input type="radio" value="1" name="jcal_enabled" id="jcal_enabled" class="cb" <TMPL_IF NAME="JCAL_ENABLED">checked="checked"</TMPL_IF> /> <MT_TRANS phrase="Jalali Calendar"></label></li>
+			<li><label><input type="radio" value="0" name="jcal_enabled" id="jcal_enabled" class="cb" <TMPL_UNLESS NAME="JCAL_ENABLED">checked="checked"</TMPL_UNLESS> /> <MT_TRANS phrase="Western Calendar"></label></li>
 		</ul>
-	<p></p>
+	<p><MT_TRANS phrase="Define the type of calnedar you would like to use for your weblog."></p>
 	</div>
 </div>
 EOT
 }
 
 #####################################################################
+sub NewWeblogCalType {
+	my ($cb, $app, $template) = @_;
+	my $old = qq{</fieldset>};
+	$old = quotemeta($old);	
+	my $new = <<HTML;
+<TMPL_IF NAME=NEW_OBJECT>
+<div class="setting">
+  <div class="label"><label for="fa_cal_type"><MT_TRANS phrase="Calendar Type:"></label></div>
+	<div class="field">
+		<ul>
+			<li><label><input type="radio" value="jal" name="fa_cal_type" id="fa_cal_type" class="cb" /> <MT_TRANS phrase="Jalali Calendar"></label></li>
+			<li><label><input type="radio" value="gre" name="fa_cal_type" id="fa_cal_type" class="cb" /> <MT_TRANS phrase="Western Calendar"></label></li>
+		</ul>
+	<p><MT_TRANS phrase="Define the type of calnedar you would like to use for your weblog."></p>
+	</div>
+</div>
+</TMPL_IF>
+</fieldset>
+HTML
+	$$template =~ s/$old/$new/;
+}
 
-my @In_Year = (
-        [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 ],
-        [ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 ],
-);
+sub _cfg_lang {
+	my ($cb, $app, $template) = @_;
+	my $old = qq{<option value="et"<TMPL_IF NAME=LANGUAGE_ET> selected="selected"</TMPL_IF>><MT_TRANS phrase="Estonian"></option>};
+	$old = quotemeta($old);
+	my $new = <<HTML;
+<option value="et"<TMPL_IF NAME=LANGUAGE_ET> selected="selected"</TMPL_IF>><MT_TRANS phrase="Estonian"></option>
+<option value="fa"<TMPL_IF NAME=LANGUAGE_FA> selected="selected"</TMPL_IF>><MT_TRANS phrase="Persian"></option>
+HTML
+	$$template =~ s/$old/$new/;
+}
 
-my @JDays_In = ( 31, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29 );
-
-sub Jdays_in {
-	my($m, $y) = @_;
-	return $JDays_In[$m]
-	unless $m == 12;
-	my $gdate = j2g_ts($y.'1101010101');
-	my $g_y = substr($gdate,0,4) - 1;
-	if ($g_y % 4 == 0 && ($g_y % 100 != 0 || $g_y % 400 == 0)) {
-	return 30;
+sub Jcal_CMSPostSave_blog {
+  my $eh = shift;
+  my ($app, $obj) = @_;
+  if ($app->{'query'}->param("fa_cal_type") eq 'jal') {
+	$plugin->set_config_value('jcal_enabled', 1, 'blog:'.$obj->id);	
+	## adding the jalali cal widget 
+	require MT::Template;
+	my $tmpl = MT::Template->new;
+	$tmpl->blog_id($obj->id);
+	$tmpl->type('custom');
+	$tmpl->name('Widget: تقویم جلالی');
+	my $new_temp = <<HTML;
+<div class="module-calendar module">
+<h2 class="module-header">تقویم ماهیانه</h2>
+<div class="module-content">
+<table summary="تقویم جلالی ماهیانه با لینک به نوشته های هر روز ماه">
+    <tr>
+        <th title="شنبه"     abbr="شنبه"    >ش </th>
+        <th title="یکشنبه"   abbr="یکشنبه"  >۱ش</th>
+        <th title="دوشنبه"   abbr="دوشنبه"  >۲ش</th>
+        <th title="سه شنبه"  abbr="سه شنبه" >۳ش</th>
+        <th title="چهارشنبه" abbr="چهارشنبه">۴ش</th>
+        <th title="پنجشنبه"  abbr="پنجشنبه" >۵ش</th>
+        <th title="جمعه"      abbr="جمعه"     >ج </th>
+    </tr>
+    <MTJCalendar month="this">
+    <MTCalendarWeekHeader><tr></MTCalendarWeekHeader>
+    <td <MTCalendarIfToday>style="border:1px solid #36414D" title="امروز"</MTCalendarIfToday>>
+    <MTCalendarIfEntries>
+    <MTEntries lastn="1">
+    <strong><a href="<MTEntryPermalink>"><MTCalendarDay numbers="farsi"></a></strong>
+    </MTEntries>
+    </MTCalendarIfEntries>
+    <MTCalendarIfNoEntries>
+    <MTCalendarDay numbers="farsi">
+    </MTCalendarIfNoEntries>
+    <MTCalendarIfBlank>&nbsp;</MTCalendarIfBlank>
+	</td>
+    <MTCalendarWeekFooter></tr></MTCalendarWeekFooter>
+    </MTJCalendar>
+</table>
+</div>
+</div>
+HTML
+	$tmpl->text($new_temp);
+	$tmpl->save;
+  } else {
+	$plugin->set_config_value('jcal_enabled', 0, 'blog:'.$obj->id);	
+  }
+}
+#####################################################################
+sub farsi_builder_build {
+	(my $blog_id = $_[1]->stash('blog_id')) || return &{$mt_builder_build}(@_);
+	my $if_jcal = $plugin->get_config_value('jcal_enabled', 'blog:'.$blog_id);
+	if ($if_jcal) {
+		use Jalali;
+		&{$mt_builder_build}(@_); 
+	} else {
+		&{$mt_builder_build}(@_); 
 	}
-	else {
-	return 29;
-	}
 }
 
-sub _wday_from_ts {
-        my($y, $m, $d) = @_;
-        my $leap = leap_year($y) ? 1 : 0;
-        $y--;
-        ## Copied from Date::Calc.
-        my $days = $y * 365;
-        $days += $y >>= 2;
-        $days -= int($y /= 25);
-        $days += $y >> 2;
-        $days += $In_Year[$leap][$m-1] + $d;
-        ($days+1) % 7;
+sub __hdlr_calendar {
+	require Jalali;
+	return Jalali::__hdlr_calendar(@_);
 }
 
-sub yday_from_ts {
-        my($y, $m, $d) = @_;
-        my $leap = $y % 4 == 0 && ($y % 100 != 0 || $y % 400 == 0) ? 1 : 0;
-        $In_Year[$leap][$m-1] + $d;
-}
+# sub farsi_rebuild {
+    # my $mt = shift;
+    # my %param = @_;
+    # my $blog;
+    # unless ($blog = $param{Blog}) {
+        # my $blog_id = $param{BlogID};
+		# my $if_jcal = $plugin->get_config_value('jcal_enabled', 'blog:'.$blog_id);
+		# if ($if_jcal) {
+			# require Jalali;
+			# &{$mt_rebuild}(@_); 
+		# }	 else {
+			# &{$mt_rebuild}(@_); 
+		# }
+    # }
+	
+# }
 
-sub leap_year {
-    my $y = shift;
-    return ($y % 4 == 0) && ($y % 100 != 0 || $y % 400 == 0);
-}
 
-sub _start_end_month {
-    my($ts) = @_[0];
-	$ts = g2j_ts($ts); 
-    my $y = substr($ts,0,4);
-	my $mo = substr($ts,4,2);
-    my $start = $y . $mo . '01000000';
-	$start = j2g_ts($start);
-    return $start unless wantarray;
-	my $end = sprintf "%04d%02d%02d235959", $y, $mo, Jdays_in($mo, $y);
-	$end = j2g_ts($end);
-    ($start, $end);
-}
-
-sub _start_end_period {
-    my $at = shift;
-    if ($at eq 'Individual') {
-        return $_[0];
-    } elsif ($at eq 'Daily') {
-        return start_end_day(@_);
-    } elsif ($at eq 'Weekly') {
-        return start_end_week(@_);
-    } elsif ($at eq 'Monthly') {
-        return _start_end_month(@_);
-    } 
-}
-
-{
-    my %Helpers = ( Monthly => \&_start_end_month,
-                    Weekly => \&start_end_week,
-                    Daily => \&start_end_day,
-                  );
-    sub _get_entry {
-        my($ts, $blog_id, $at, $order) = @_;
-        my($start, $end) = $Helpers{$at}->($ts);
-        if ($order eq 'previous') {
-            $order = 'descend';
-            $ts = $start;
-        } else {
-            $order = 'ascend';
-            $ts = $end;
+sub farsi_rebuild {
+    my $mt = shift;
+    my %param = @_;
+    my $blog;
+    unless ($blog = $param{Blog}) {
+        my $blog_id = $param{BlogID};
+		my $if_jcal = $plugin->get_config_value('jcal_enabled', 'blog:'.$blog_id);
+		if ($if_jcal) {use Jalali;}
+		$blog = MT::Blog->load($blog_id, {cached_ok=>1}) or
+            return $mt->error(
+                MT->translate("Load of blog '[_1]' failed: [_2]",
+                    $blog_id, MT::Blog->errstr));
+    }
+    return 1 if $blog->is_dynamic;
+    my $at = $blog->archive_type || '';
+    my @at = split /,/, $at;
+    if (my $set_at = $param{ArchiveType}) {
+        my %at = map { $_ => 1 } @at;
+        return $mt->error(
+            MT->translate("Archive type '[_1]' is not a chosen archive type",
+                $set_at)) unless $at{$set_at};
+        @at = ($set_at);
+    }
+    if (@at) {
+        require MT::Entry;
+        my %arg = ('sort' => 'created_on', direction => 'descend');
+        if ($param{Limit}) {
+            $arg{offset} = $param{Offset};
+            $arg{limit} = $param{Limit};
         }
-        my $entry = MT::Entry->load(
-            { blog_id => $blog_id,
-              status => MT::Entry::RELEASE() },
-            { limit => 1,
-              'sort' => 'created_on',
-              direction => $order,
-              start_val => $ts });
-        $entry;
-    }
-}
-
-sub __format_ts {
-    my($format, $ts, $blog, $lang) = @_;
-    my %f;
-    unless ($lang) {
-        $lang = $blog && $blog->language ? $blog->language : 
-            MT::ConfigMgr->instance->DefaultLanguage;
-    }
-    if ($lang eq 'jp') {
-        $lang = 'ja';
-    }
-    unless (defined $format) {
-        $format = $Languages{$lang}[3] || "%x %X";
-    }
-    my $cache = MT::Request->instance->cache('formats');
-    unless ($cache) {
-        MT::Request->instance->cache('formats', $cache = {});
-    }
-    if (my $f_ref = $cache->{$ts . $lang}) {
-        %f = %$f_ref;
-    } else {
-        my $L = $Languages{$lang};
-		my @ts = @f{qw( Y m d H M S )} = unpack 'A4A2A2A2A2A2', $ts;
-        $f{w} = wday_from_ts(@ts[0..2]);  
-        $f{j} = yday_from_ts(@ts[0..2]);
-        $f{'y'} = substr $f{Y}, 2;
-        $f{b} = substr_wref $L->[1][$f{'m'}-1] || '', 0, 3;
-        $f{B} = $L->[1][$f{'m'}-1];
-        if ($lang eq 'ja') {
-            $f{a} = substr $L->[0][$f{w}] || '', 0, 8;
-        } else {
-            $f{a} = substr_wref $L->[0][$f{w}] || '', 0, 3;
-        }
-        $f{A} = $L->[0][$f{w}];
-        ($f{e} = $f{d}) =~ s!^0! !;
-        $f{I} = $f{H};
-        $f{I} = $f{H};
-        if ($f{I} > 12) {
-            $f{I} -= 12;
-            $f{p} = $L->[2][1];
-        } elsif ($f{I} == 0) {
-            $f{I} = 12;
-            $f{p} = $L->[2][0];
-        } elsif ($f{I} == 12) {
-            $f{p} = $L->[2][1];
-        } else {
-            $f{p} = $L->[2][0];
-        }
-        $f{I} = sprintf "%02d", $f{I};
-        ($f{k} = $f{H}) =~ s!^0! !;
-        ($f{l} = $f{I}) =~ s!^0! !;
-        $f{j} = sprintf "%03d", $f{j};
-        $f{z} = $ts;
-        $cache->{$ts . $lang} = \%f;
-    }
-    my $date_format = $Languages{$lang}->[4] || "%x";
-    my $time_format = $Languages{$lang}->[5] || "%X";
-    $format =~ s!%x!$date_format!g;
-    $format =~ s!%X!$time_format!g;
-
-    my $jformat = g2jstrftime( $format , $ts ); ###Aziz
-	$jformat = farsi_number($jformat); ###Aziz 
-	$jformat =~ s/\./\//g;	###Aziz
-    #$format =~ s!%(\w)!$f{$1}!g if defined $format;
-	$jformat;
-}
-
-
-sub _archive_file_for {
-    my($entry, $blog, $at, $cat, $map, $timestamp) = @_;
-    return if $at eq 'None';
-    my $file;
-    if ($blog->is_dynamic) {
-        require MT::TemplateMap;
-        $map = MT::TemplateMap->new;
-        $map->file_template($DynamicURIs{$at});
-    }
-    unless ($map) {
-        my $cache = MT::Request->instance->cache('maps');
-        unless ($cache) {
-            MT::Request->instance->cache('maps', $cache = {});
-        }
-        unless ($map = $cache->{$blog->id . $at}) {
-            require MT::TemplateMap;
-            $map = MT::TemplateMap->load({ blog_id => $blog->id,
-                                           archive_type => $at,
-                                           is_preferred => 1 });
-            $cache->{$blog->id . $at} = $map if $map;
-        }
-    }
-    my $file_tmpl = $map ? $map->file_template : '';
-    $file_tmpl ||= '';
-    my($ctx);
-    if ($file_tmpl =~ m/\%[_-]?[A-Za-z]/) {
-        if ($file_tmpl =~ m/<\$?MT/) {
-            $file_tmpl =~ s!(<\$?MT[^>]+?>)|(%[_-]?[A-Za-z])!$1 ? $1 : '<MTFileTemplate format="'. $2 . '">'!ge;
-        } else {
-            $file_tmpl = qq{<MTFileTemplate format="$file_tmpl">};
-        }
-    }
-    if ($file_tmpl) {
-        require MT::Template::Context;
-        $ctx = MT::Template::Context->new;
-        $ctx->stash('blog', $blog);
-    }
-    local $ctx->{__stash}{category};
-    $timestamp = $entry->created_on() if $entry;
-
-    my $index = MT::ConfigMgr->instance->IndexBasename;
-    if ($at eq 'Individual') {
-        Carp::croak "archive_file_for Individual archive needs an entry" 
-            unless $entry;
-        if ($file_tmpl) {
-            $ctx->stash('entry', $entry);
-            $ctx->{current_timestamp} = $entry->created_on;
-        } else {
-            if ($blog->old_style_archive_links) {
-                $file = sprintf("%06d", $entry->id);
-            } else {
-                my $basename = $entry->basename();
-                $basename = dirify($entry->title()) unless defined($basename);
-                $file = sprintf("%04d/%02d/%s", 
-                    unpack('A4A2', $entry->created_on),
-                    $basename);
+        my $pre_iter = MT::Entry->load_iter({ blog_id => $blog->id,
+                                       status => MT::Entry::RELEASE() },
+                                     \%arg);
+        my ($next, $curr);
+        my $prev = $pre_iter->();
+        my $iter = sub { $next = $curr; $curr = $prev;
+            if ($curr) {
+                $prev = $pre_iter->();
+                $curr->{__next} = $next;
+                $curr->{__previous} = $prev;
+            }
+            $curr;
+        };
+        my $cb = $param{EntryCallback};
+        while (my $entry = $iter->()) {
+            if ($cb) {
+                $cb->($entry) || $mt->log($cb->errstr());
+            }
+            for my $at (@at) {
+                if ($at eq 'Category') {
+                    my $cats = $entry->categories;
+                    for my $cat (@$cats) {
+                        $mt->_rebuild_entry_archive_type(
+                            Entry => $entry, Blog => $blog,
+                            Category => $cat, ArchiveType => 'Category',
+                            NoStatic => $param{NoStatic},
+                        ) or return;
+                    }
+                } else {
+                    $mt->_rebuild_entry_archive_type( Entry => $entry,
+                                                      Blog => $blog,
+                                                      ArchiveType => $at,
+                                                      $param{TemplateID}
+                                                       ? (TemplateID =>
+                                                           $param{TemplateID})
+                                                       : (),
+                                                      NoStatic => $param{NoStatic})
+                        or return;
+                }
             }
         }
-    } elsif ($at eq 'Daily') {
-        if ($file_tmpl) {
-            ($ctx->{current_timestamp}, $ctx->{current_timestamp_end}) =
-            start_end_day($timestamp);
-        } else {
-            my $start = start_end_day($timestamp);
-            my($year, $mon, $mday) = unpack 'A4A2A2', $start;
-            if ($blog->old_style_archive_links) {
-                $file = sprintf("%04d_%02d_%02d", $year, $mon, $mday);
-            } else {
-                $file = sprintf("%04d/%02d/%02d/%s", $year, $mon, $mday, $index);
-            }
-        }
-    } elsif ($at eq 'Weekly') {
-        if ($file_tmpl) {
-            ($ctx->{current_timestamp}, $ctx->{current_timestamp_end}) =
-                start_end_week($timestamp);
-        } else {
-            my $start = start_end_week($timestamp);
-            my($year, $mon, $mday) = unpack 'A4A2A2', $start;
-            if ($blog->old_style_archive_links) {
-                $file = sprintf("week_%04d_%02d_%02d", $year, $mon, $mday);
-            } else {
-                $file = sprintf("%04d/%02d/%02d-week/%s", $year, $mon, $mday, $index);
-            }
-        }
-    } elsif ($at eq 'Monthly') {
-        if ($file_tmpl) {
-            ($ctx->{current_timestamp}, $ctx->{current_timestamp_end}) =
-                _start_end_month($timestamp);
-        } else {
-            my $start = _start_end_month($timestamp);
-			my $start = '909090121212';
-            my($year, $mon) = unpack 'A4A2', $start;
-            if ($blog->old_style_archive_links) {
-                $file = sprintf("%04d_%02d", $year, $mon);
-            } else {
-                $file = sprintf("%04d/%02d/%s", $year, $mon, $index);
-            }
-        }
-    } elsif ($at eq 'Category') {
-        my $this_cat = $cat ? $cat : $entry->category;
-        if ($file_tmpl) {
-            $ctx->stash('archive_category', $this_cat);
-            $ctx->{inside_mt_categories} = 1;
-            $ctx->{__stash}{category} = $this_cat;
-        } else {
-            if (!$this_cat) {
-                return "";
-            }
-            my $label = '';
-            $label = dirify($this_cat->label);
-            if ($label !~ /\w/) {
-                $label = $this_cat ? "cat" .  $this_cat->id : "";
-            }
-            if ($blog->old_style_archive_links) {
-                $file = sprintf("cat_%s", $label);
-            } else {
-                $file = sprintf("%s/%s", $this_cat->category_path, $index);
-            }
-        }
-    } else {
-        return $entry->error(MT->translate(
-            "Invalid Archive Type setting '[_1]'", $at ));
     }
-    if ($file_tmpl) {
-        local $ctx->{archive_type} = $at;
-        require MT::Builder;
-        my $build = MT::Builder->new;
-        my $tokens = $build->compile($ctx, $file_tmpl) 
-            or return $blog->error($build->errstr());
-        defined($file = $build->build($ctx, $tokens)) 
-            or return $blog->error($build->errstr());
-    } else {
-        my $ext = $blog->file_extension;
-        $file .= '.' . $ext if $ext;
+    unless ($param{NoIndexes}) {
+        $mt->rebuild_indexes( Blog => $blog ) or return;
     }
-    $file;
+    if ($mt->{PublishCommenterIcon}) {
+        $mt->make_commenter_icon($blog);
+    }
+    1;
 }
+
 
 
 1;

@@ -17,7 +17,6 @@ body {
 
 .body {
 	margin: 0 30px 15px 0;
-	direction: rtl;
 	text-align:right;
 	}
 
@@ -502,6 +501,8 @@ fieldset select {
 	background-color: #FFF;
 	direction: ltr;
 	text-align:left;
+	margin-left: 0px;
+	margin-right: 23px;
 	}
 
 #list-plugins div.config p.caption,
@@ -1036,7 +1037,7 @@ input, select, textarea {
 #welcome-message a, .box a, #edit-entry a, #list-entry a,  #list-comment a, #cfg-prefs a, #mode_view a,#mode_list_cat a,
 #mode_start_import a, #edit-permissions a, #mode_list_pings a, #mode_view_log a, #mode_make_bm_link a,#mode_list_commenters a,
 #mode_list_plugins a,#mode_list a,#mode_list_blogs a,#mode_logout a, #mode_system_list_blogs a, #mode_list_authors a, #mode_list_tags a,
-#mode_search_replace a, #mode_rebuild a {
+#mode_search_replace a, #mode_rebuild a, .system a{
 	text-decoration:none;
 }
 
@@ -1063,15 +1064,6 @@ input, select, textarea {
 
 #edit-blog input#name {
 	direction:rtl;
-}
-
-#mode_view_log table {
-	direction:ltr;
-	text-align:left;
-}
-
-#mode_view_log table th {
-	text-align:left;
 }
 
 #edit-template #name {
@@ -1163,6 +1155,7 @@ input, select, textarea {
 
 .system, .blog {
 	direction: rtl;
+	_direction: ltr;
 	text-align: right;
 }
 
@@ -1176,6 +1169,11 @@ input, select, textarea {
 #mode_start_import #file {
   direction:ltr;
   text-align:left;
+}
+
+.import-process pre {
+  direction:rtl;
+  text-align:right;
 }
 
 #mode_view #edit-author .permission-box h4 {
@@ -1196,3 +1194,144 @@ input, select, textarea {
 	line-height:15px;
 	margin: 4px;
 }
+
+.list table tr td.status-details img { background-image: url(images/spinner-big-left.gif); }
+
+/* plugin styles */
+/* widget manager */
+#installed-column {
+	right: 220px;
+	left:auto;
+}
+
+#center-column {
+	right: 200px;
+	left:auto;
+}
+
+#available-column {
+	right: 0px;
+	left:auto;
+}
+
+.module {
+	text-align: center;
+	direction:ltr;
+}
+
+#stage {
+	width: 420px;
+}
+/* style catcher */
+#template-picker .anchored {
+	left: auto !important;
+	right: 0 !important;
+}
+
+.left {
+	float: right !important;
+}
+
+.right {
+	float: left !important;
+}
+
+.align-left {
+   text-align: right !important;
+}
+
+.align-right {
+   text-align: left !important;
+}
+
+.three-five input {
+   margin-left: 0px !important;
+   margin-right: 10px !important;
+}
+
+.tc-mixer-entry {
+	float: right !important; 
+}
+
+.tc-mixer-entry .label { 
+	margin-right: 0px !important; 
+	margin-left: 4px !important; 
+}
+
+.tc-mixer-entry .title .content { 
+	text-align: right !important;
+}
+
+.category img { 
+	margin-left: 6px !important; 
+	margin-right: 0px !important; 
+}
+
+.display-mini {
+	right: 22px !important;
+	left: auto !important;
+}
+
+.display-mini .tc-mixer-entry {
+	margin: 0 0 0 3px !important;
+}
+
+#template-picker #show-details,
+#template-picker #hide-details {
+	left: 0 !important;
+	right: auto !important;
+}
+
+#preview-button { float: right !important; }
+
+#cancel-button { 
+	margin-right: 4px !important; 
+	margin-left: 0px !important; 
+	float: left !important; 
+}
+
+#select-design-controls {
+    text-align: left !important;
+}
+
+#template-picker {
+	right: 0 !important;
+	left: auto !important;
+}
+
+#template-picker #categories-wrapper {
+	right: 0 !important;
+	left: auto !important;
+}
+
+#template-picker #templates-wrapper {
+	right: 172px !important;
+	left: auto !important;
+}
+
+#template-picker #details-wrapper {
+	right: 364px !important;
+	left: auto !important;
+}
+
+#template-picker .scrollbox {
+	right: 0 !important;
+	left: auto !important;
+	direction: ltr;
+}
+
+#template-picker #display-details {
+	right: 0 !important;
+	left: auto !important;
+}
+
+#repo-url {
+	text-align: left !important;
+	direction: ltr !important;
+}
+
+.category{ 
+	direction: rtl !important; 
+}
+
+.templates-wrapper-wide { width: 555px !important; }
