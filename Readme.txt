@@ -3,7 +3,7 @@
 #  Aziz Ashofte
 #  www.aziza.ir
 #
-# $Id: Readme.txt 5 2006-07-15 01:20:42Z nekofar $
+# $Id$
 
 plugin home: http://movabletype.ir
 plugin manual: http://movabletype.ir/plugins/farsi/
