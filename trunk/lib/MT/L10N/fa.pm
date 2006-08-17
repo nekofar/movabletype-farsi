@@ -493,7 +493,7 @@ sub encoding { 'utf-8' }
     'List &amp; Edit Entries' => 'لیست نوشته ها',
     'Next' => 'بعدی',
     '_external_link_target' => '_haut',
-    'View Entry' => 'Afficher la note',
+    'View Entry' => 'نمایش نوشته',
     'Entry' => 'نوشته',
     'Comments ([_1])' => 'نظرات ([_1])',
     'TrackBacks ([_1])' => 'دنبالک ها ([_1])',
