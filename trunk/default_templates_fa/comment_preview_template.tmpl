@@ -69,7 +69,7 @@
                                  <MTElse>
                                  <p>
                                     <label for="comment-author"><MT_TRANS phrase="Name">:</label>
-                                    <input id="comment-author" name="author" size="30" value="<$MTCommentPreviewAuthor$>" />
+                                    <input id="comment-author" name="author" size="30" value="<$MTCommentPreviewAuthor$>" onkeypress="PersianKeyPress(event)" onkeydown="PersianKeyDown(event)" />
                                  </p>
                                  <p>
                                     <label for="comment-email"><MT_TRANS phrase="Email Address">:</label>
@@ -86,7 +86,7 @@
 
                               <p id="comments-open-text">
                                  <label for="comment-text"><MT_TRANS phrase="Comments">: <MTIfAllowCommentHTML><MT_TRANS phrase="(you may use HTML tags for style)"></MTIfAllowCommentHTML></label>
-                                 <textarea id="comment-text" name="text" rows="10" cols="50"><$MTCommentPreviewBody autolink="0" sanitize="0" convert_breaks="0"$></textarea>
+                                 <textarea id="comment-text" name="text" rows="10" cols="50" onkeypress="PersianKeyPress(event)" onkeydown="PersianKeyDown(event)"><$MTCommentPreviewBody autolink="0" sanitize="0" convert_breaks="0"$></textarea>
                               </p>
                               <div id="comments-open-footer" class="comments-open-footer">
                                  <input type="submit" name="preview" id="comment-preview" accesskey="v" value="<MT_TRANS phrase="Preview">" />
