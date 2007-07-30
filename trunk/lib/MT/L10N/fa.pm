@@ -21,8 +21,8 @@ use vars qw( @ISA %Lexicon );
 	'$short_name [_1]' => '$short_name [_1]',
 
 ## php/lib/function.mtcommentfields.php
-	'Thanks for signing in,' => 'Danke für Ihre Anmeldung',
-	'Now you can comment.' => 'Sie können jetzt Ihren Kommentar verfassen.',
+	'Thanks for signing in,' => 'از ورود شما متشکریم،',
+	'Now you can comment.' => '. حالا می توانید نظر بدهید.',
 	'sign out' => 'خروج',
 	'(If you haven\'t left a comment here before, you may need to be approved by the site owner before your comment will appear. Until then, it won\'t appear on the entry. Thanks for waiting.)' => '(Wenn Sie auf dieser Site bisher noch nicht kommentiert haben, wird Ihr Kommentar eventuell erst zeitverzögert freigeschaltet werden. Vielen Dank für Ihre Geduld.)',
 	'Remember me?' => 'Benutzername speichern?',
