@@ -3779,7 +3779,7 @@ use vars qw( @ISA %Lexicon );
 	'Could not create [_1] folder - Check that your \'themes\' folder is webserver-writable.' => 'Konnte Ordner [_1] nicht anlegen. Bitte überprüfen Sie, ob Ihr Webserver Schreibrechte für den Ordner \'themes\' hat.',
 	'Error downloading image: [_1]' => 'Fehler beim Herunterladen einer Bilddatei: [_1]',
 	'Successfully applied new theme selection.' => 'Neues Thema erfolgreich übertragen.',
-	'Invalid URL: [_1]' => 'Ungültige URL: [_1]',
+	'Invalid URL: [_1]' => '[_1]آدرس نادرست مي باشد : ',
 
 );
 
