@@ -96,11 +96,11 @@ use vars qw( @ISA %Lexicon );
 	'TrackBacks' => 'دنبالک‌ها',
 
 ## default_templates/search_results.mtml
-	'Search Results' => 'Suchergebnisse',
-	'Search this site' => 'Diese Site durchsuchen',
+	'Search Results' => 'نمایش نتایج جستجو',
+	'Search this site' => 'جستجوی این سایت',
 	'Search' => 'جستجو',
-	'Match case' => 'Groß-/Kleinschreibung',
-	'Regex search' => 'Regex-Suche',
+	'Match case' => 'مورد مشابه',
+	'Regex search' => 'جستجوی منطبق',
 	'Matching entries matching &ldquo;[_1]&rdquo; from [_2]' => 'Einträge mit &ldquo;[_1]&rdquo; von [_2]',
 	'Entries tagged with &ldquo;[_1]&rdquo; from [_2]' => 'Mit &ldquo;[_1]&rdquo; getaggte Einträge von [_2]',
 	'Entry Summary' => 'Eintrags-Zusammenfassung',
@@ -115,7 +115,7 @@ use vars qw( @ISA %Lexicon );
 	'publishing NOT personal' => 'Regal NOT Schrank',
 
 ## default_templates/archive_index.mtml
-	'Archives' => 'Archive',
+	'Archives' => 'آرشیو',
 	'Monthly Archives' => 'Monatsarchive',
 	'Categories' => 'Kategorien',
 	'Author Archives' => 'Autorenarchive',
@@ -1510,21 +1510,21 @@ use vars qw( @ISA %Lexicon );
 
 ## search_templates/comments.tmpl
 	'Search for new comments from:' => 'Suche nach Kommentaren:',
-	'the beginning' => 'Gesamt',
-	'one week back' => 'in der letzten Woche',
-	'two weeks back' => 'in den letzten zwei Wochen',
-	'one month back' => 'im letzten Monat',
-	'two months back' => 'in den letzten zwei Monaten',
-	'three months back' => 'in den letzten drei Monaten',
-	'four months back' => 'in den letzten vier Monaten',
-	'five months back' => 'in den letzten fünf Monaten',
-	'six months back' => 'in den letzten sechs Monaten',
-	'one year back' => 'im letzten Jahr',
-	'Find new comments' => 'Neue Kommentare finden',
-	'Posted in [_1] on [_2]' => 'Veröffentlicht in [_1] am [_2]',
-	'No results found' => 'Keine Treffer',
-	'No new comments were found in the specified interval.' => 'Keine neuen Kommentare im Zeitraum.',
-	'Select the time interval that you\'d like to search in, then click \'Find new comments\'' => 'Gewünschten Zeitraum auswählen, dann  \'Neue Kommentare finden\' wählen',
+	'the beginning' => 'ابتدا',
+	'one week back' => 'یک هفته قبل',
+	'two weeks back' => 'دو هفته قبل',
+	'one month back' => 'یک ماه قبل',
+	'two months back' => 'دو ماه قبل',
+	'three months back' => 'سه ماه قبل',
+	'four months back' => 'چهار ماه قبل',
+	'five months back' => 'پنج ماه قبل',
+	'six months back' => 'شش ماه قبل',
+	'one year back' => 'یک سال قبل',
+	'Find new comments' => 'یافتن نظر جدید',
+	'Posted in [_1] on [_2]' => 'در [_1] به [_2] ارسال شده',
+	'No results found' => 'نتایجی پیدا نشد',
+	'No new comments were found in the specified interval.' => 'هیچ نظر جدیدی در مدت مشخص شده، پیدا نشد.',
+	'Select the time interval that you\'d like to search in, then click \'Find new comments\'' => 'فاصله زمانی که مایلید جستجو شود را انتخاب کنید، سپس بر روی "یافتن نظر جدید" کلیک کنید.',
 
 ## search_templates/results_feed_rss2.tmpl
 
